@@ -1,7 +1,4 @@
-const createError = require('http-errors');
-const flash = require('connect-flash');
 const express = require('express');
-const url = require('url');
 const morgan = require('morgan');
 const path = require('path');
 const ejs = require('ejs');
@@ -10,12 +7,7 @@ const bodyParser = require('body-parser');
 const config = require('config');
 const mongoose = require('mongoose');
 const cluster = require('cluster');
-const http = require('http');
 const numCPUs = require('os').cpus().length;
-const session    = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const passport = require('passport');
-require('./server/config/passport')(passport);
 const indexRouter = require('./server/routes/indexRoute');
 const loginRouter = require('./server/routes/loginRoute');
 const usersApiRouter = require('./server/routes/usersApiRoute');
@@ -66,19 +58,12 @@ if (cluster.isMaster && config.get('App.isCluster')) {
 		next();
 	};
 
-	app.set('views', path.join(__dirname, 'server/views/pages'));
+	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'ejs');
 
-	app.use(require('node-sass-middleware')({
-		src: path.join(__dirname, 'public'),
-		dest: path.join(__dirname, 'public'),
-		indentedSyntax: true,
-		sourceMap: true
-	}));
 	// Setup public directory
 	app.use(express.static(path.join(__dirname, 'public')));
 
-	app.use(flash());
 	app.use(morgan('short'));
 	app.use(myLogger);
 	app.use(requestTime);
@@ -86,16 +71,6 @@ if (cluster.isMaster && config.get('App.isCluster')) {
 	app.use(cookieParser());
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
-
-	app.use(session({
-		secret: 'keyboard cat',
-		resave: false,
-		saveUninitialized: false,
-		cookie: { maxAge: 60000 },
-		store: new MongoStore({ mongooseConnection: db })
-	}));
-	app.use(passport.initialize());
-	app.use(passport.session());
 
 	app.use('/', indexRouter);
 	app.use('/comments', commentsRouter);
