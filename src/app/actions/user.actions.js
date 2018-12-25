@@ -15,7 +15,7 @@ export function registerUser(user, history) {
 		let {userName = '', password = ''} = user;
 		if(userName.length === 0 || password.length === 0) dispatch(errorAlert('userName and password is mandatory'));
 
-		dispatch(request());
+		dispatch(request(user));
 		userService.register(user)
 			.then(
 				result => {
@@ -32,7 +32,7 @@ export function registerUser(user, history) {
 			);
 	};
 
-	function request() { return {type: USERS_LOGIN_REQUEST}; }
+	function request(user) { return {type: USERS_LOGIN_REQUEST, payload: {user}}; }
 	function success(result) { return {type: USERS_LOGIN_SUCCESS, payload: {result}}; }
 	function failure(error) { return {type: USERS_LOGIN_FAILURE, payload: {error}}; }
 }
