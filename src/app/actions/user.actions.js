@@ -8,7 +8,7 @@ import {
 	USERS_LOGOUT
 } from '../constants';
 import {userService} from '../services/user.service';
-import {alertError} from './alert.actions';
+import {errorAlert} from './alert.actions';
 import {history} from '../helpers';
 
 export function userLogin(username, password) {
@@ -23,7 +23,7 @@ export function userLogin(username, password) {
 				},
 				error => {
 					dispatch(failure(error));
-					dispatch(alertError(error));
+					dispatch(errorAlert(error));
 				}
 			);
 	};

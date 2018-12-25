@@ -9,15 +9,11 @@ const mongoose = require('mongoose');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const indexRouter = require('./server/routes/indexRoute');
-const loginRouter = require('./server/routes/loginRoute');
-const usersApiRouter = require('./server/routes/usersApiRoute');
-const commentsRouter = require('./server/routes/commentsRoute');
-const commentsApiRouter = require('./server/routes/commentsApiRoute');
 
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect(config.get('MongoDB.connectionString'), { useNewUrlParser: true })
+mongoose.connect(config.get('MongoDB.connectionString'), {useNewUrlParser: true})
 	.then(() => {
 		console.log('Successfully connected to the database');
 	})
@@ -26,13 +22,11 @@ mongoose.connect(config.get('MongoDB.connectionString'), { useNewUrlParser: true
 		process.exit(0);
 	});
 
-const db = mongoose.connection;
-
-if (cluster.isMaster && config.get('App.isCluster')) {
+if(cluster.isMaster && config.get('App.isCluster')) {
 	console.log(`Master ${process.pid} is running`);
 
 	// Fork workers.
-	for (let i = 0; i < numCPUs; i++) {
+	for(let i = 0; i < numCPUs; i++) {
 		cluster.fork();
 	}
 
@@ -70,12 +64,9 @@ if (cluster.isMaster && config.get('App.isCluster')) {
 
 	app.use(cookieParser());
 	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(bodyParser.urlencoded({extended: true}));
 
 	app.use('/', indexRouter);
-	app.use('/comments', commentsRouter);
-	app.use('/api/user', usersApiRouter);
-	app.use('/api/comments', commentsApiRouter);
 
 	app.use((req, res) => {
 		res.status(404).send('Page not found. Try another.');

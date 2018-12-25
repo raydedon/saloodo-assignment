@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {userActions} from '../actions';
+import {userLogout, userLogin} from '../actions';
 
 class LoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 
 		// reset login status
-		this.props.dispatch(userActions.logout());
+		this.props.userLogout();
 
 		this.state = {
 			username: '',
@@ -30,9 +30,9 @@ class LoginPage extends React.Component {
 
 		this.setState({submitted: true});
 		const {username, password} = this.state;
-		const {dispatch} = this.props;
+		const {userLogin} = this.props;
 		if(username && password) {
-			dispatch(userActions.login(username, password));
+			userLogin(username, password);
 		}
 	}
 
@@ -76,4 +76,9 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = ({loggingIn}) => ({loggingIn});
 
-export default connect(mapStateToProps, {})(LoginPage);
+const mapDispatchToProps = dispatch => ({
+	userLogout: () => dispatch(userLogout()),
+	userLogin: (username, password) => dispatch(userLogin(username, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

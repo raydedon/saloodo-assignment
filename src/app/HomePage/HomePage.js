@@ -2,17 +2,18 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {userActions} from '../actions';
+import {getAllUser} from '../actions/index';
 
 class HomePage extends React.Component {
 	componentDidMount() {
-		this.props.dispatch(userActions.getAll());
+		let {getAllUser} = this.props;
+		getAllUser();
 	}
 
 	render() {
 		const {user, users} = this.props;
 		return (
-			<div className="col-md-6 col-md-offset-3">
+			<div className="col-md-12">
 				<h1>Hi {user.firstName}!</h1>
 				<p>You're logged in with React & JWT!!</p>
 				<h3>Users from secure api end point:</h3>
@@ -37,4 +38,8 @@ class HomePage extends React.Component {
 
 const mapStateToProps = ({users, authentication: {user}}) => ({user, users});
 
-export default connect(mapStateToProps, {})(HomePage);
+const mapDispatchToProps = dispatch => ({
+	getAllUser: () => dispatch(getAllUser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

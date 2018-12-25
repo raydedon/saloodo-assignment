@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer from '../todoapp/reducers/index';
+import rootReducer from '../reducers/index';
 import thunk from 'redux-thunk';
 
 // Middleware you want to use in production:
