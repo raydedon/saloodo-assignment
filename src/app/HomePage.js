@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {getAllUser} from '../actions/index';
+import {getAllUser} from './actions/index';
 
 class HomePage extends React.Component {
 	componentDidMount() {

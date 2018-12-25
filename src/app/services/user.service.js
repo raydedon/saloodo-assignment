@@ -4,18 +4,19 @@ import {authHeader} from '../helpers/index';
 export const userService = {
 	login,
 	logout,
-	getAll
+	getAll,
+	register
 };
 
-function login(username, password) {
+function login(userName, password) {
 	const requestOptions = {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify({username, password})
+		body: JSON.stringify({userName, password})
 	};
 
-	return fetch(`${ROOT_URL}/users/authenticate`, requestOptions)
-		.then(handleResponse)
+	return fetch(`${ROOT_URL}/api/auth/login`, requestOptions)
+		.then(res => res.json())
 		.then(user => {
 			// login successful if there's a jwt token in the response
 			if(user.token) {
@@ -24,6 +25,20 @@ function login(username, password) {
 			}
 
 			return user;
+		});
+}
+
+function register(user) {
+	const requestOptions = {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json'},
+		body: JSON.stringify(user)
+	};
+
+	return fetch(`${ROOT_URL}/api/auth/register`, requestOptions)
+		.then(res => res.json())
+		.then(result => {
+			return result;
 		});
 }
 

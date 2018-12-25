@@ -51,7 +51,7 @@ exports.readAll = (req, res) => {
 
 exports.update = (req, res) => {
 	let {userName = ''} = req.params;
-	User.findOneAndUpdate({userName}, {$set: {...req.body}}, {new: true, upsert:true})
+	User.findOneAndUpdate({userName}, {$set: {...req.body}}, {new: true, upsert: true})
 		.then(users => {
 			res.send(users);
 		})

@@ -8,10 +8,34 @@ import {
 	USERS_LOGOUT
 } from '../constants';
 import {userService} from '../services/user.service';
-import {errorAlert} from './alert.actions';
-import {history} from '../helpers';
+import {errorAlert, successAlert} from './alert.actions';
 
-export function userLogin(username, password) {
+export function registerUser(user, history) {
+	return dispatch => {
+		let {userName = '', password = ''} = user;
+		if(userName.length === 0 || password.length === 0) dispatch(errorAlert('userName and password is mandatory'));
+
+		dispatch(request());
+		userService.register(user)
+			.then(
+				result => {
+					dispatch(successAlert(result.message));
+					dispatch(success(result));
+					history.push('/');
+				},
+				error => {
+					dispatch(failure(error));
+					dispatch(errorAlert(error));
+				}
+			);
+	};
+
+	function request() { return {type: USERS_LOGIN_REQUEST}; }
+	function success(result) { return {type: USERS_LOGIN_SUCCESS, payload: {result}}; }
+	function failure(error) { return {type: USERS_LOGIN_FAILURE, payload: {error}}; }
+}
+
+export function userLogin(username, password, history) {
 	return dispatch => {
 		dispatch(request({username}));
 

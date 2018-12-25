@@ -2,16 +2,17 @@ import React from 'react';
 import {HashRouter, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {clearAlert} from '../actions/index';
-import {PrivateRoute} from '../components/PrivateRoute';
-import HomePage from '../HomePage/HomePage';
-import LoginPage from '../LoginPage/LoginPage';
+import {clearAlert} from './actions/index';
+import {PrivateRoute} from './components/PrivateRoute';
+import HomePage from './HomePage';
+import LoginPage from './LoginPage';
+import Register from './Register';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	render() {
 		const {alert} = this.props;
 		return (
@@ -24,6 +25,7 @@ class App extends React.Component {
 						<div>
 							<PrivateRoute exact path="/" component={HomePage} />
 							<Route path="/login" component={LoginPage} />
+							<Route path="/register" component={Register} />
 						</div>
 					</HashRouter>
 				</div>

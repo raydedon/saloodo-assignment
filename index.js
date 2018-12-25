@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const config = require('config');
@@ -9,6 +8,8 @@ const mongoose = require('mongoose');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const indexRouter = require('./server/routes/indexRoute');
+const authRouter = require('./server/routes/auth');
+const usersApiRouter = require('./server/routes/usersApiRoute');
 
 mongoose.Promise = global.Promise;
 
@@ -67,6 +68,8 @@ if(cluster.isMaster && config.get('App.isCluster')) {
 	app.use(bodyParser.urlencoded({extended: true}));
 
 	app.use('/', indexRouter);
+	app.use('/api/user', usersApiRouter);
+	app.use('/api/auth', authRouter);
 
 	app.use((req, res) => {
 		res.status(404).send('Page not found. Try another.');
@@ -74,7 +77,7 @@ if(cluster.isMaster && config.get('App.isCluster')) {
 
 	let mode = process.env.NODE_ENV || 'development';
 
-	app.listen(config.get('App.webServer.port'), (error) => {
+	app.listen(config.get('App.webServer.port'), () => {
 		console.log(`Process ${process.pid} is listening to all incoming requests 
 		mode: ${mode} 
 		Server listening on port: ${config.get('App.webServer.port')}`);

@@ -9,5 +9,8 @@
 	},
 	"MongoDB": {
 		"connectionString": "mongodb://localhost:27017/saloodoApp"
+	},
+	"jwt": {
+		"secret": "mernsecure"
 	}
 }

@@ -15,21 +15,30 @@ const userSchema = new Schema({
 	country: String,
 	state: String,
 	pinCode: String,
-	role: { type: String, default: Util.ROLE_BIKER }
+	role: {type: String, default: Util.ROLE_BIKER}
 });
 
 userSchema.virtual('gravatar').get(function() {
-	return gravatar.url(this.email ,  {s: '80', r: 'x', d: 'retro'}, true);
+	return gravatar.url(this.email,  {s: '80', r: 'x', d: 'retro'}, true);
 });
 
 // Encrypt Password
 userSchema.statics.generateHash = function(password) {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(saltRounds), null);
 };
 
 // Verify if password is valid
 userSchema.methods.validPassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
+};
+
+userSchema.methods.comparePassword = function(passw, cb) {
+	bcrypt.compare(passw, this.password, function(err, isMatch) {
+		if(err) {
+			return cb(err);
+		}
+		cb(null, isMatch);
+	});
 };
 
 // create the model for user and expose it to our app
