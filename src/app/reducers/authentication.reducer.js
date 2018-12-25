@@ -1,19 +1,20 @@
-import {USERS_LOGIN_FAILURE, USERS_LOGIN_REQUEST, USERS_LOGIN_SUCCESS, USERS_LOGOUT} from '../constants';
+import {USERS_LOGIN_FAILURE, USERS_LOGIN_REQUEST, USERS_LOGIN_SUCCESS, USERS_LOGOUT} from '../constants/index';
+let userJSON = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
+let initialState = Object.keys(userJSON).length > 0 ? {loggedIn: true, user: userJSON} : {loggedIn: false, user: userJSON};
 
-let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? {loggedIn: true, user} : {};
 
 export function authentication(state = initialState, action) {
-	switch(action.type) {
+	let {type, payload} = action;
+	switch(type) {
 		case USERS_LOGIN_REQUEST:
 			return {
 				loggingIn: true,
-				user: action.user
+				user: payload.user
 			};
 		case USERS_LOGIN_SUCCESS:
 			return {
 				loggedIn: true,
-				user: action.user
+				user: payload.user
 			};
 		case USERS_LOGIN_FAILURE:
 			return {};

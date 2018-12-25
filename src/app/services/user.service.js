@@ -17,11 +17,12 @@ function login(userName, password) {
 
 	return fetch(`${ROOT_URL}/api/auth/login`, requestOptions)
 		.then(res => res.json())
-		.then(user => {
+		.then(({token = '', user = {}}) => {
 			// login successful if there's a jwt token in the response
-			if(user.token) {
+			if(token.length > 0) {
 				// store user details and jwt token in local storage to keep user logged in between page refreshes
 				localStorage.setItem('user', JSON.stringify(user));
+				localStorage.setItem('jwtToken', token);
 			}
 
 			return user;
@@ -45,6 +46,7 @@ function register(user) {
 function logout() {
 	// remove user from local storage to log user out
 	localStorage.removeItem('user');
+	localStorage.removeItem('jwtToken');
 }
 
 function getAll() {

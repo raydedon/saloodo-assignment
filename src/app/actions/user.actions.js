@@ -8,7 +8,7 @@ import {
 	USERS_LOGOUT
 } from '../constants';
 import {userService} from '../services/user.service';
-import {errorAlert, successAlert} from './alert.actions';
+import {clearAlert, errorAlert, successAlert} from './alert.actions';
 
 export function registerUser(user, history) {
 	return dispatch => {
@@ -20,12 +20,14 @@ export function registerUser(user, history) {
 			.then(
 				result => {
 					dispatch(successAlert(result.message));
+					setTimeout(() => dispatch(clearAlert()), 1000);
 					dispatch(success(result));
 					history.push('/');
 				},
 				error => {
 					dispatch(failure(error));
 					dispatch(errorAlert(error));
+					setTimeout(() => dispatch(clearAlert()), 1000);
 				}
 			);
 	};
@@ -43,11 +45,14 @@ export function userLogin(username, password, history) {
 			.then(
 				user => {
 					dispatch(success(user));
+					dispatch(successAlert(`Welcome ${user.name}`));
+					setTimeout(() => dispatch(clearAlert()), 1000);
 					history.push('/');
 				},
 				error => {
 					dispatch(failure(error));
 					dispatch(errorAlert(error));
+					setTimeout(() => dispatch(clearAlert()), 1000);
 				}
 			);
 	};

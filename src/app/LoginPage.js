@@ -42,10 +42,6 @@ class LoginPage extends React.Component {
 		const {username, password, submitted} = this.state;
 		return (
 			<div className="col-md-6">
-				<div className="alert alert-info">
-                    Username: test<br />
-                    Password: test
-				</div>
 				<h2>Login</h2>
 				<form name="form" onSubmit={this.handleSubmit}>
 					<div className={`form-group${submitted && !username ? ' has-error' : ''}`}>
@@ -78,11 +74,11 @@ class LoginPage extends React.Component {
 }
 
 
-const mapStateToProps = ({loggingIn}) => ({loggingIn});
+const mapStateToProps = ({loggingIn}, {history}) => ({loggingIn, history});
 
 const mapDispatchToProps = dispatch => ({
 	userLogout: () => dispatch(userLogout()),
-	userLogin: (username, password) => dispatch(userLogin(username, password, history)),
+	userLogin: (username, password, history) => dispatch(userLogin(username, password, history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
