@@ -10,6 +10,7 @@ const numCPUs = require('os').cpus().length;
 const indexRouter = require('./server/routes/indexRoute');
 const authRouter = require('./server/routes/auth');
 const usersApiRouter = require('./server/routes/usersApiRoute');
+const shipmentsApiRouter = require('./server/routes/shipmentsApiRoute');
 
 mongoose.Promise = global.Promise;
 
@@ -69,6 +70,7 @@ if(cluster.isMaster && config.get('App.isCluster')) {
 
 	app.use('/', indexRouter);
 	app.use('/api/user', usersApiRouter);
+	app.use('/api/shipment', shipmentsApiRouter);
 	app.use('/api/auth', authRouter);
 
 	app.use((req, res) => {

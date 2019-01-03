@@ -15,8 +15,8 @@ class Create extends Component {
 			state: '',
 			pinCode: ''
 		};
-		
-		
+
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}

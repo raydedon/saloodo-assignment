@@ -15,7 +15,19 @@ const userSchema = new Schema({
 	country: String,
 	state: String,
 	pinCode: String,
-	role: {type: String, default: Util.ROLE_BIKER}
+	role: {type: String, default: Util.ROLE_BIKER},
+	parcels: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Shipment'
+	}]
+});
+
+userSchema.virtual('id').get(function() {
+	return this._id.toHexString();
+});
+
+userSchema.set('toJSON', {
+	virtuals: true
 });
 
 userSchema.virtual('gravatar').get(function() {

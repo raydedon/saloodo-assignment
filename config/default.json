@@ -8,7 +8,7 @@
 		"isCluster": false
 	},
 	"MongoDB": {
-      "connectionString": "mongodb://admin:admin123@ds143734.mlab.com:43734/project"
+		"connectionString": "mongodb://localhost:27017/saloodoApp"
 	},
 	"jwt": {
 		"secret": "mernsecure"

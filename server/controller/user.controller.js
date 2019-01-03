@@ -13,9 +13,10 @@ exports.create = (req, res) => {
 		gender = 0,
 		country = '',
 		state = '',
-		pinCode = ''
+		pinCode = '',
+		parcels = []
 	} = req.body;
-	const user = new User({name, phoneNumber, email, userName, password, gender, country, state, pinCode});
+	const user = new User({name, phoneNumber, email, userName, password, gender, country, state, pinCode, parcels});
 
 	// Save User in the database
 	user.save()

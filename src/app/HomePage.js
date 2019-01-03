@@ -2,16 +2,17 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {getAllUser} from './actions/index';
+import {fetchShipments} from './actions/shipment.actions';
+import TodoList from './components/todo/todo-list';
 
 class HomePage extends React.Component {
 	componentDidMount() {
-		let {getAllUser} = this.props;
-		getAllUser();
+		let {fetchShipments} = this.props;
+		fetchShipments();
 	}
 
 	render() {
-		const {user, users = []} = this.props;
+		const {user, users = [], shipments = []} = this.props;
 		return (
 			<div className="col-md-12">
 				<h1>Hi {user.name}!</h1>
@@ -20,6 +21,7 @@ class HomePage extends React.Component {
 				{users.loading && <em>Loading users...</em>}
 				{users.error && <span className="text-danger">ERROR: {users.error}</span>}
 				{users.items && <ul>{users.items.map((user) => (<li key={user.id}>{`${user.name}`}</li>))}</ul>}
+				<TodoList list={shipments} />
 				<p>
 					<Link to="/login">Logout</Link>
 				</p>
@@ -28,10 +30,10 @@ class HomePage extends React.Component {
 	}
 }
 
-const mapStateToProps = ({users = [], authentication: {user = {}}}) => ({user, users});
+const mapStateToProps = ({users = [], shipments = [], authentication: {user = {}}}) => ({user, shipments, users});
 
 const mapDispatchToProps = dispatch => ({
-	getAllUser: () => dispatch(getAllUser())
+	fetchShipments: () => dispatch(fetchShipments())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
