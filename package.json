@@ -79,7 +79,7 @@
     "mongod": "sudo service mongod start",
     "mongodb-win": "mongod",
     "mongo": "mongo --host 127.0.0.1:27017",
-    "server": "nodemon index.js"
+    "server": "node index.js"
   },
   "repository": {
     "type": "git",
