@@ -7,6 +7,7 @@ import {PrivateRoute} from './components/PrivateRoute';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import Register from './Register';
+import './App.scss';
 
 class App extends React.Component {
 	constructor(props) {

@@ -21,11 +21,15 @@ class HomePage extends React.Component {
 		console.info(user.role);
 		return (
 			<div className="col-md-12">
-				<h1>Hi {user.name}!</h1>
-				<TodoList list={shipments} itemComp={user.role === ROLE_BIKER ? BikerTodoItem : ManagerTodoItem} />
-				<p>
+				<div className="home-header">
+					<h1>Hi {user.name}!</h1>
 					<Link to="/login">Logout</Link>
-				</p>
+				</div>
+				<br />
+				<br />
+				<div className="list-holder">
+					<TodoList list={shipments} itemComp={user.role === ROLE_BIKER ? BikerTodoItem : ManagerTodoItem} />
+				</div>
 			</div>
 		);
 	}

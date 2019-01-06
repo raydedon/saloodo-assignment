@@ -26,3 +26,14 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+.home-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.list-holder {
+	max-height: 800px;
+	overflow: auto;
+}

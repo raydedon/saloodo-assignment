@@ -12,14 +12,16 @@
 	align-items: center;
 	padding: 5px 0;
 	flex-wrap: wrap;
+	border-bottom: 1px solid #ccc;
 	&.DELIVERED {
 		background-color: lawngreen;
 	}
 	.column {
 		flex: 1;
 		text-align: center;
+		padding: 10px 15px;
 		&.shipment-biker {
-			flex-basis: 50px;
+			flex-basis: 100px;
 			flex-shrink: 0;
 			flex-grow: 1;
 		}
