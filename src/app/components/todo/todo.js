@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import './todo.scss';
-import {updateBiker} from '../../actions/shipment.actions';
 import SelectBox from './select';
 
-class Todo extends Component {
+export default class Todo extends Component {
 	constructor(props) {
 		super(props);
 
@@ -17,7 +15,7 @@ class Todo extends Component {
 	}
 
 	render() {
-		let {id, origin, destination, biker, status, completed, desc, updateBiker, users} = this.props;
+		let {id, origin, destination, biker, status, completed, desc} = this.props;
 		return (
 			<div className={`todo-item ${completed ? 'todo-completed' : 'todo-notcomplete'} list-unstyled`}>
 				<div className="col shipment-origin">{origin}</div>
@@ -31,11 +29,3 @@ class Todo extends Component {
 		);
 	}
 }
-
-const mapStateToProps = ({users = []}, ownProps) => ({users, ...ownProps});
-
-const mapDispatchToProps = dispatch => ({
-	updateBiker: (shipmentId, bikerId) => dispatch(updateBiker(shipmentId, bikerId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);

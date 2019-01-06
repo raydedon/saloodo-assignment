@@ -2,15 +2,15 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {updateBiker} from '../../actions/shipment.actions';
 
-const SelectBox = ({users = [], updateBiker, shipmentId = '', biker = {} }) => {
+const SelectBox = ({users = [], updateBiker, shipmentId = '', biker = {}}) => {
 	let onChangeHandler = (event) => {
 		console.info(`shipmentId: ${shipmentId}, ${event.target.value}`);
 		event.preventDefault();
 		updateBiker(shipmentId, event.target.value);
 	};
-	
+
 	let {id: bikerId} = biker;
-	
+
 	return (
 		<select className="input-sm" onChange={onChangeHandler} value={bikerId}>
 			<option key={'selectoption'} value={''}>{'Select Option'}</option>
