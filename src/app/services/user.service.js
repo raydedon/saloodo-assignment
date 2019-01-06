@@ -55,7 +55,11 @@ function getAll() {
 		headers: authHeader()
 	};
 
-	return fetch(`${ROOT_URL}/users`, requestOptions).then(handleResponse);
+	return fetch(`${ROOT_URL}/api/users`, requestOptions)
+		.then(res => res.json())
+		.then(users => {
+			return users;
+		});
 }
 
 function handleResponse(response) {

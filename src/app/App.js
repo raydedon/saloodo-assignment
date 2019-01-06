@@ -12,7 +12,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	render() {
 		const {alert} = this.props;
 		return (

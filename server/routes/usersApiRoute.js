@@ -3,8 +3,6 @@ const User = require('../controller/user.controller');
 
 const usersApiRouter = express.Router();
 
-usersApiRouter.post('/', User.create);
-
 usersApiRouter.get('/', User.readAll);
 
 usersApiRouter.get('/:userName', User.read);

@@ -13,9 +13,8 @@ export function shipments(state = [], action) {
 		}
 		case SHIPMENT_STATUS_MARK_DELIVERED_SUCCESS:
 		case UPDATE_SHIPMENTS_BIKER_SUCCESS: {
-			let {shipments = []} = state;
 			let {shipment} = payload;
-			return shipments.map(s => s.id === shipment.id ? shipment : s);
+			return state.map(s => s.id === shipment.id ? shipment : s);
 		}
 		default:
 			return state;

@@ -45,10 +45,10 @@ export function updateBiker(shipmentId, bikerId) {
 	const request = () => ({type: UPDATE_SHIPMENTS_BIKER_REQUEST});
 	const success = (shipment) =>  ({type: UPDATE_SHIPMENTS_BIKER_SUCCESS, payload: {shipment}});
 	const failure = (error) => ({type: UPDATE_SHIPMENTS_BIKER_FAILURE, payload: {error}});
-	
+
 	return dispatch => {
 		dispatch(request());
-		
+
 		shipmentService.updateBiker(shipmentId, bikerId)
 			.then(
 				shipment => dispatch(success(shipment)),

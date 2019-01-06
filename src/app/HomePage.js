@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import {fetchShipments} from './actions/shipment.actions';
 import TodoList from './components/todo/todo-list';
-import {getAllUser} from "./actions";
+import {getAllUser} from './actions';
 
 class HomePage extends React.Component {
 	componentDidMount() {

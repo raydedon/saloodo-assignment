@@ -143,12 +143,12 @@ exports.updateBiker = (req, res) => {
 			if(err) {
 				res.status(403).send({success: false, msg: 'Unauthorized.'});
 			} else {
-				if(decoded.role === Util.ROLE_BIKER) {
+				if(decoded.role === Util.ROLE_MANAGER) {
 					User.findById(req.params.userId, {lean: true}, function(error, user) {
 						if(error) {
 							return res.status(403).send({success: false, msg: 'Unauthorized.'});
 						}
-						Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {biker: user.id}}, {new: true, upsert: true})
+						return Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {biker: user.id, status: Util.SHIPMENT_STATUS_ASSIGNED}}, {new: true, upsert: true})
 							.populate('biker')
 							.exec()
 							.then(shipment => {
@@ -158,6 +158,8 @@ exports.updateBiker = (req, res) => {
 								res.status(500).send({message: err.message || 'Some error occurred while updating Users.'});
 							});
 					});
+				} else {
+					res.status(403).send({success: false, msg: 'Unauthorized.'});
 				}
 			}
 		});

@@ -35,10 +35,10 @@ function fetchShipments() {
 
 function updateBiker(shipmentId, bikerId) {
 	const requestOptions = {
-		method: GET_REQUEST,
+		method: PUT_REQUEST,
 		headers: authHeader()
 	};
-	
+
 	return fetch(`${ROOT_URL}/api/shipments/${shipmentId}/user/${bikerId}`, requestOptions)
 		.then(res => res.json())
 		.then(shipment => {
