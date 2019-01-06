@@ -20,7 +20,7 @@ class HomePage extends React.Component {
 		const {user, shipments = []} = this.props;
 		console.info(user.role);
 		return (
-			<div className="col-md-12">
+			<div>
 				<div className="home-header">
 					<h1>Hi {user.name}!</h1>
 					<Link to="/login">Logout</Link>
