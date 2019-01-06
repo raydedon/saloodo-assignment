@@ -45,15 +45,15 @@ exports.read = (req, res) => {
 			if(err) {
 				res.status(403).send({success: false, msg: 'Unauthorized.'});
 			} else {
-				if(decoded.role === Util.ROLE_BIKER) {
-					Shipment.find()
-						.then(shipments => {
-							res.send(shipments);
-						})
-						.catch(err => {
-							res.status(500).send({message: err.message || 'Some error occurred while retrieving Shipments.'});
-						});
-				}
+				Shipment.find()
+					.populate('biker')
+					.exec()
+					.then(shipments => {
+						res.send(shipments);
+					})
+					.catch(err => {
+						res.status(500).send({message: err.message || 'Some error occurred while retrieving Shipments.'});
+					});
 			}
 		});
 	} else {
@@ -149,6 +149,7 @@ exports.updateBiker = (req, res) => {
 							return res.status(403).send({success: false, msg: 'Unauthorized.'});
 						}
 						Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {biker: user.id}}, {new: true, upsert: true})
+							.populate('biker')
 							.exec()
 							.then(shipment => {
 								res.send(shipment);

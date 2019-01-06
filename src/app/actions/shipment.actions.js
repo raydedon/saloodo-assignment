@@ -4,7 +4,8 @@ import {
 	SHIPMENT_STATUS_MARK_DELIVERED_FAILURE,
 	FETCH_SHIPMENTS_REQUEST,
 	FETCH_SHIPMENTS_SUCCESS,
-	FETCH_SHIPMENTS_FAILURE
+	FETCH_SHIPMENTS_FAILURE, UPDATE_SHIPMENTS_BIKER_REQUEST, UPDATE_SHIPMENTS_BIKER_SUCCESS,
+	UPDATE_SHIPMENTS_BIKER_FAILURE
 } from '../constants';
 import {shipmentService} from '../services/shipment.service';
 
@@ -35,6 +36,22 @@ export function fetchShipments() {
 		shipmentService.fetchShipments()
 			.then(
 				shipments => dispatch(success(shipments)),
+				error => dispatch(failure(error))
+			);
+	};
+}
+
+export function updateBiker(shipmentId, bikerId) {
+	const request = () => ({type: UPDATE_SHIPMENTS_BIKER_REQUEST});
+	const success = (shipment) =>  ({type: UPDATE_SHIPMENTS_BIKER_SUCCESS, payload: {shipment}});
+	const failure = (error) => ({type: UPDATE_SHIPMENTS_BIKER_FAILURE, payload: {error}});
+	
+	return dispatch => {
+		dispatch(request());
+		
+		shipmentService.updateBiker(shipmentId, bikerId)
+			.then(
+				shipment => dispatch(success(shipment)),
 				error => dispatch(failure(error))
 			);
 	};

@@ -3,7 +3,8 @@ import Todo from './todo';
 import {connect} from 'react-redux';
 import GenericList from '../generic-list';
 
-const TodoList = ({list}) => {
+const TodoList = ({list = []}) => {
+	if(list.length === 0) return null;
 	return <GenericList list={list} ItemComp={Todo} />;
 };
 

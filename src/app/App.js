@@ -12,23 +12,21 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-
+	
 	render() {
 		const {alert} = this.props;
 		return (
-			<div className="jumbotron">
-				<div className="container">
-					{alert.message &&
-					<div className={`alert ${alert.type}`}>{alert.message}</div>
-					}
-					<HashRouter>
-						<div>
-							<PrivateRoute exact path="/" component={HomePage} />
-							<Route path="/login" component={LoginPage} />
-							<Route path="/register" component={Register} />
-						</div>
-					</HashRouter>
-				</div>
+			<div className="container">
+				{alert.message &&
+				<div className={`alert ${alert.type}`}>{alert.message}</div>
+				}
+				<HashRouter>
+					<div>
+						<PrivateRoute exact path="/" component={HomePage} />
+						<Route path="/login" component={LoginPage} />
+						<Route path="/register" component={Register} />
+					</div>
+				</HashRouter>
 			</div>
 		);
 	}

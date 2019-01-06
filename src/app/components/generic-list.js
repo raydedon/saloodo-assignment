@@ -1,14 +1,13 @@
 import React from 'react';
+import './generic-list.scss';
 
-const GenericList = ({list, ItemComp}) => {
+const GenericList = ({list = [], ItemComp}) => {
 	return (
-		<ul>
+		<div className="generic-list">
 			{list.map((i) => (
-				<li key={i.id}>
-					<ItemComp {...i} />
-				</li>
+				<ItemComp {...i} key={i.id} />
 			))}
-		</ul>
+		</div>
 	);
 };
 

@@ -3,7 +3,8 @@ import {authHeader} from '../helpers';
 
 export const shipmentService = {
 	markDelivered,
-	fetchShipments
+	fetchShipments,
+	updateBiker
 };
 
 function markDelivered(id) {
@@ -25,9 +26,22 @@ function fetchShipments() {
 		headers: authHeader()
 	};
 
-	return fetch(`${ROOT_URL}/api/shipment`, requestOptions)
+	return fetch(`${ROOT_URL}/api/shipments`, requestOptions)
 		.then(res => res.json())
 		.then(shipments => {
 			return shipments;
+		});
+}
+
+function updateBiker(shipmentId, bikerId) {
+	const requestOptions = {
+		method: GET_REQUEST,
+		headers: authHeader()
+	};
+	
+	return fetch(`${ROOT_URL}/api/shipments/${shipmentId}/user/${bikerId}`, requestOptions)
+		.then(res => res.json())
+		.then(shipment => {
+			return shipment;
 		});
 }
