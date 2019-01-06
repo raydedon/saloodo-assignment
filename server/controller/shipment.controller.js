@@ -45,7 +45,8 @@ exports.read = (req, res) => {
 			if(err) {
 				res.status(403).send({success: false, msg: 'Unauthorized.'});
 			} else {
-				Shipment.find()
+				const query = decoded.role === Util.ROLE_BIKER ? {biker: decoded._id} : {};
+				Shipment.find(query)
 					.populate('biker')
 					.exec()
 					.then(shipments => {
@@ -122,6 +123,8 @@ exports.update = (req, res) => {
 			} else {
 				if(decoded.role === Util.ROLE_BIKER) {
 					Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {...req.body, updatedDate: Date.now()}}, {new: true, upsert: true})
+						.populate('biker')
+						.exec()
 						.then(shipment => {
 							res.send(shipment);
 						})

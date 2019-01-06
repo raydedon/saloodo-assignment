@@ -4,7 +4,8 @@ import {authHeader} from '../helpers';
 export const shipmentService = {
 	markDelivered,
 	fetchShipments,
-	updateBiker
+	updateBiker,
+	updateShipmentStatus
 };
 
 function markDelivered(id) {
@@ -40,6 +41,21 @@ function updateBiker(shipmentId, bikerId) {
 	};
 
 	return fetch(`${ROOT_URL}/api/shipments/${shipmentId}/user/${bikerId}`, requestOptions)
+		.then(res => res.json())
+		.then(shipment => {
+			return shipment;
+		});
+}
+
+
+function updateShipmentStatus(shipmentId, status) {
+	const requestOptions = {
+		method: PUT_REQUEST,
+		headers: {'Content-Type': 'application/json', ...authHeader()},
+		body: JSON.stringify({status})
+	};
+
+	return fetch(`${ROOT_URL}/api/shipments/${shipmentId}`, requestOptions)
 		.then(res => res.json())
 		.then(shipment => {
 			return shipment;

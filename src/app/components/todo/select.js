@@ -12,7 +12,7 @@ const SelectBox = ({users = [], updateBiker, shipmentId = '', biker = {}}) => {
 	let {id: bikerId} = biker;
 
 	return (
-		<select className="input-sm" onChange={onChangeHandler} value={bikerId}>
+		<select className="input-sm form-control" onChange={onChangeHandler} value={bikerId}>
 			<option key={'selectoption'} value={''}>{'Select Option'}</option>
 			{users.map((i) => (
 				<option key={i.id} value={i.id}>{i.name}</option>

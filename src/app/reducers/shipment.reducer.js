@@ -1,6 +1,6 @@
 import {
 	FETCH_SHIPMENTS_SUCCESS,
-	SHIPMENT_STATUS_MARK_DELIVERED_SUCCESS,
+	SHIPMENT_STATUS_MARK_DELIVERED_SUCCESS, UPDATE_SHIPMENT_STATUS_SUCCESS,
 	UPDATE_SHIPMENTS_BIKER_SUCCESS
 } from '../constants';
 
@@ -12,6 +12,7 @@ export function shipments(state = [], action) {
 			return shipments;
 		}
 		case SHIPMENT_STATUS_MARK_DELIVERED_SUCCESS:
+		case UPDATE_SHIPMENT_STATUS_SUCCESS:
 		case UPDATE_SHIPMENTS_BIKER_SUCCESS: {
 			let {shipment} = payload;
 			return state.map(s => s.id === shipment.id ? shipment : s);

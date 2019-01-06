@@ -9,8 +9,19 @@
 .todo-item {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 5px 0;
-	.col {
+	flex-wrap: wrap;
+	&.DELIVERED {
+		background-color: lawngreen;
+	}
+	.column {
 		flex: 1;
+		text-align: center;
+		&.shipment-biker {
+			flex-basis: 50px;
+			flex-shrink: 0;
+			flex-grow: 1;
+		}
 	}
 }
