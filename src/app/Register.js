@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {registerUser} from './actions';
+import {ROLE_BIKER} from './constants';
 
 class Create extends Component {
 
@@ -40,7 +41,8 @@ class Create extends Component {
 			phoneNumber = '',
 			email = '',
 			userName = '',
-			password = ''
+			password = '',
+			role = ROLE_BIKER
 		} = this.state;
 		return (
 			<div className="container">
@@ -57,9 +59,13 @@ class Create extends Component {
 
 					<label htmlFor="inputUserName" className="sr-only">User Name</label>
 					<input type="text" id="inputUserName" className="form-control" placeholder="User Name" name="userName" value={userName} onChange={this.onChange} />
-
+					
 					<label htmlFor="inputPassword" className="sr-only">Password</label>
 					<input type="password" id="inputPassword" className="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required />
+					
+					<label htmlFor="inputRole" className="sr-only">Role</label>
+					<input type="text" id="inputRole" className="form-control" placeholder="Role" name="role" value={role} onChange={this.onChange} required />
+
 
 					<button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 					<p>

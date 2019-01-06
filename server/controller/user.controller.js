@@ -1,4 +1,5 @@
 const User = require('../model/user');
+const Util = require('../Util');
 
 exports = module.exports = {};
 
@@ -14,9 +15,9 @@ exports.create = (req, res) => {
 		country = '',
 		state = '',
 		pinCode = '',
-		parcels = []
+		role = Util.ROLE_BIKER
 	} = req.body;
-	const user = new User({name, phoneNumber, email, userName, password, gender, country, state, pinCode, parcels});
+	const user = new User({name, phoneNumber, email, userName, password, gender, country, state, pinCode, role});
 
 	// Save User in the database
 	user.save()
@@ -30,8 +31,9 @@ exports.create = (req, res) => {
 		});
 };
 
+// get biker by username
 exports.read = (req, res) => {
-	User.find({userName: req.param.userName})
+	User.find({userName: req.params.userName})
 		.then(users => {
 			res.send(users);
 		})
@@ -40,6 +42,7 @@ exports.read = (req, res) => {
 		});
 };
 
+// get all bikers
 exports.readAll = (req, res) => {
 	User.find()
 		.then(users => {

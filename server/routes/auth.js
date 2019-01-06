@@ -19,9 +19,11 @@ router.post('/register', function(req, res) {
 			gender = 0,
 			country = '',
 			state = '',
-			pinCode = ''
+			pinCode = '',
+			role
 		} = req.body;
-		const newUser = new User({name, phoneNumber, email, userName, password: User.generateHash(password), gender, country, state, pinCode});
+		const newUser = new User({name, phoneNumber, email, userName,
+			password: User.generateHash(password), gender, country, state, pinCode, role});
 		// save the user
 		newUser.save(function(err) {
 			if(err) {

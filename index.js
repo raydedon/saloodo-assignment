@@ -69,8 +69,8 @@ if(cluster.isMaster && config.get('App.isCluster')) {
 	app.use(bodyParser.urlencoded({extended: true}));
 
 	app.use('/', indexRouter);
-	app.use('/api/user', usersApiRouter);
-	app.use('/api/shipment', shipmentsApiRouter);
+	app.use('/api/users', usersApiRouter);
+	app.use('/api/shipments', shipmentsApiRouter);
 	app.use('/api/auth', authRouter);
 
 	app.use((req, res) => {

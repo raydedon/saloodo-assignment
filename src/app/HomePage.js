@@ -21,7 +21,6 @@ class HomePage extends React.Component {
 				{users.loading && <em>Loading users...</em>}
 				{users.error && <span className="text-danger">ERROR: {users.error}</span>}
 				{users.items && <ul>{users.items.map((user) => (<li key={user.id}>{`${user.name}`}</li>))}</ul>}
-				<TodoList list={shipments} />
 				<p>
 					<Link to="/login">Logout</Link>
 				</p>

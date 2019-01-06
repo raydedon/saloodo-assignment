@@ -15,11 +15,7 @@ const userSchema = new Schema({
 	country: String,
 	state: String,
 	pinCode: String,
-	role: {type: String, default: Util.ROLE_BIKER},
-	parcels: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Shipment'
-	}]
+	role: {type: String, default: Util.ROLE_BIKER}
 });
 
 userSchema.virtual('id').get(function() {

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Util = require('../Util');
+const Schema = mongoose.Schema;
+
 const shipmentSchema = mongoose.Schema({
 	origin: {
 		type: String,
@@ -18,7 +20,8 @@ const shipmentSchema = mongoose.Schema({
 	updatedDate: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	biker: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 shipmentSchema.virtual('id').get(function() {

@@ -37,6 +37,7 @@ exports.create = (req, res) => {
 	}
 };
 
+// get all shipments
 exports.read = (req, res) => {
 	var token = getToken(req.headers);
 	if(token) {
@@ -45,7 +46,6 @@ exports.read = (req, res) => {
 				res.status(403).send({success: false, msg: 'Unauthorized.'});
 			} else {
 				if(decoded.role === Util.ROLE_BIKER) {
-					
 					Shipment.find()
 						.then(shipments => {
 							res.send(shipments);
@@ -61,13 +61,108 @@ exports.read = (req, res) => {
 	}
 };
 
-exports.readAll = (req, res) => {
+// get shipment by id
+exports.readById = (req, res) => {
+	var token = getToken(req.headers);
+	if(token) {
+		jwt.verify(token, config.get('jwt.secret'), function(err, decoded) {
+			if(err) {
+				res.status(403).send({success: false, msg: 'Unauthorized.'});
+			} else {
+				if(decoded.role === Util.ROLE_BIKER) {
+					Shipment.findById(req.params.shipmentId)
+						.lean()
+						.exec()
+						.then(shipment => {
+							res.send(shipment);
+						})
+						.catch(err => {
+							res.status(500).send({message: err.message || 'Some error occurred while retrieving Shipment.'});
+						});
+				}
+			}
+		});
+	} else {
+		res.status(403).send({success: false, msg: 'Unauthorized.'});
+	}
+};
+
+
+// get shipments biker id
+exports.readByUserId = (req, res) => {
+	var token = getToken(req.headers);
+	if(token) {
+		jwt.verify(token, config.get('jwt.secret'), function(err, decoded) {
+			if(err) {
+				res.status(403).send({success: false, msg: 'Unauthorized.'});
+			} else {
+				if(decoded.role === Util.ROLE_BIKER) {
+					Shipment.find({biker: req.params.userId})
+						.exec()
+						.then(shipments => {
+							res.send(shipments);
+						})
+						.catch(err => {
+							res.status(500).send({message: err.message || 'Some error occurred while retrieving Shipment.'});
+						});
+				}
+			}
+		});
+	} else {
+		res.status(403).send({success: false, msg: 'Unauthorized.'});
+	}
 };
 
 exports.update = (req, res) => {
+	var token = getToken(req.headers);
+	if(token) {
+		jwt.verify(token, config.get('jwt.secret'), function(err, decoded) {
+			if(err) {
+				res.status(403).send({success: false, msg: 'Unauthorized.'});
+			} else {
+				if(decoded.role === Util.ROLE_BIKER) {
+					Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {...req.body, updatedDate: Date.now()}}, {new: true, upsert: true})
+						.then(shipment => {
+							res.send(shipment);
+						})
+						.catch(err => {
+							res.status(500).send({message: err.message || 'Some error occurred while updating Users.'});
+						});
+				}
+			}
+		});
+	} else {
+		res.status(403).send({success: false, msg: 'Unauthorized.'});
+	}
 };
 
-exports.delete = (req, res) => {
+exports.updateBiker = (req, res) => {
+	var token = getToken(req.headers);
+	if(token) {
+		jwt.verify(token, config.get('jwt.secret'), function(err, decoded) {
+			if(err) {
+				res.status(403).send({success: false, msg: 'Unauthorized.'});
+			} else {
+				if(decoded.role === Util.ROLE_BIKER) {
+					User.findById(req.params.userId, {lean: true}, function(error, user) {
+						if(error) {
+							return res.status(403).send({success: false, msg: 'Unauthorized.'});
+						}
+						Shipment.findByIdAndUpdate(req.params.shipmentId, {$set: {biker: user.id}}, {new: true, upsert: true})
+							.exec()
+							.then(shipment => {
+								res.send(shipment);
+							})
+							.catch(err => {
+								res.status(500).send({message: err.message || 'Some error occurred while updating Users.'});
+							});
+					});
+				}
+			}
+		});
+	} else {
+		res.status(403).send({success: false, msg: 'Unauthorized.'});
+	}
 };
 
 function getToken(headers) {
