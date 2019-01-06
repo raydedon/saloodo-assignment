@@ -27,7 +27,7 @@ export function markDelivered(id) {
 }
 
 export function fetchShipments() {
-	const request = () => ({type: FETCH_SHIPMENTS_REQUEST});
+	const request = () => ({type: FETCH_SHIPMENTS_REQUEST, payload: {shipments: []}});
 	const success = (shipments) =>  ({type: FETCH_SHIPMENTS_SUCCESS, payload: {shipments}});
 	const failure = (error) => ({type: FETCH_SHIPMENTS_FAILURE, payload: {error}});
 
