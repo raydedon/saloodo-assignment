@@ -44,7 +44,7 @@ exports.read = (req, res) => {
 
 // get all bikers
 exports.readAll = (req, res) => {
-	User.find()
+	User.find({role: Util.ROLE_BIKER})
 		.then(users => {
 			res.send(users);
 		})
