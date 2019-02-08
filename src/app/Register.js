@@ -21,10 +21,11 @@ class Create extends Component {
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
-
+	
 	onChange(e) {
-		const {name, value} = e.target;
-		this.setState({[name]: value});
+		const {name, value = '', checked = true, type} = e.target;
+		const valueOfInput = type === 'checkbox' ? checked : value;
+		this.setState({[name]: valueOfInput});
 	}
 
 	onSubmit(e) {
